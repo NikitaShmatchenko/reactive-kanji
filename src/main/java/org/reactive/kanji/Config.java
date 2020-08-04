@@ -61,13 +61,4 @@ public class Config extends AbstractR2dbcConfiguration {
                 })
                 .build();
     }
-
-    @Bean
-    public RouterFunction<ServerResponse> kanjiRouter(KanjiHandler kanjiHandler) {
-        return route()
-                .GET("/kanji/{character}", accept(APPLICATION_JSON), kanjiHandler::getKanji)
-                .GET("/kanji", accept(APPLICATION_JSON), kanjiHandler::getAllKanjis)
-                .POST("/kanji", accept(APPLICATION_JSON), kanjiHandler::saveKanji)
-                .build();
-    }
 }

@@ -14,11 +14,17 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DictionaryInfoSearchServiceImpl implements DictionaryInfoSearchService {
 
+    private static final String SEARCH_FAIL_ERROR = "Could find such character or service is unavailable";
+
     private final SearchOptions searchOptions;
 
     public Mono<DictionaryInfo> searchKanji(String kanji) {
         return searchOptions.search(DictionaryInfoRequest.builder()
                 .kanji(kanji)
-                .build());
+                .build())
+                .onErrorResume(e -> {
+                    log.error(SEARCH_FAIL_ERROR, e);
+                    return Mono.just(new DictionaryInfo());
+                });
     }
 }
