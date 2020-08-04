@@ -1,6 +1,6 @@
 package org.reactive.kanji.service.api;
 
-import org.reactive.kanji.persistence.entities.Kanji;
+import org.reactive.kanji.service.model.Kanji;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
