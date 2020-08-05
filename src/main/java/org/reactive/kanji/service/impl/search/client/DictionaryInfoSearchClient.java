@@ -27,18 +27,18 @@ public class DictionaryInfoSearchClient implements SearchOptions {
 
         Function<UriBuilder, URI> uriBuilder = builder -> builder
                 .pathSegment(KANJI_SEGMENT)
-                .pathSegment(String.valueOf(request.getKanji()))
+                .pathSegment(request.getKanji())
                 .build();
 
-        return read(uriBuilder);
+        return read(uriBuilder, DictionaryInfo.class);
     }
 
-    private <T> Mono<T> read(Function<UriBuilder, URI> uriFunction) {
+    private <T> Mono<T> read(Function<UriBuilder, URI> uriFunction, Class<T> type) {
 
         return webClient.get()
                 .uri(uriFunction)
                 .accept(APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono((Class<T>) DictionaryInfo.class);
+                .bodyToMono(type);
     }
 }
