@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+
 import static lombok.AccessLevel.PRIVATE;
 
 @Getter
@@ -12,5 +13,5 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor(access = PRIVATE)
 @EqualsAndHashCode
 public class DictionaryInfoRequest {
-    private final String kanji;
+    private String kanji;
 }

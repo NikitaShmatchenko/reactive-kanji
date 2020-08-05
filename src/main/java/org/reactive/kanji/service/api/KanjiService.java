@@ -1,13 +1,12 @@
 package org.reactive.kanji.service.api;
 
 import org.reactive.kanji.service.model.Kanji;
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface KanjiService {
 
-    Disposable save(Kanji kanji);
+    Mono<Kanji> save(Mono<Kanji> kanji);
 
     Mono<Kanji> getKanjiByCharacter(String character);
 
