@@ -12,5 +12,5 @@ public interface KanjiService {
 
     Mono<Kanji> getKanjiByMeaning(String meaning);
 
-    Flux<Kanji> getAllKanjis();
+    Flux<Kanji> getAllKanji();
 }

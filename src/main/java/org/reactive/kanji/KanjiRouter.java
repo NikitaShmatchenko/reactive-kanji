@@ -17,7 +17,7 @@ public class KanjiRouter {
     public RouterFunction<ServerResponse> kanjiRouts(KanjiHandler kanjiHandler) {
         return route()
                 .GET("/kanji/{character}", kanjiHandler::getKanji)
-                .GET("/kanji", kanjiHandler::getAllKanjis)
+                .GET("/kanji", kanjiHandler::getAllKanji)
                 .POST("/kanji", accept(APPLICATION_JSON), kanjiHandler::saveKanji)
                 .build();
     }

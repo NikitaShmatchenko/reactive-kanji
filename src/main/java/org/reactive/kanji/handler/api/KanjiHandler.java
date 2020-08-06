@@ -8,7 +8,7 @@ public interface KanjiHandler {
 
     Mono<ServerResponse> saveKanji(ServerRequest request);
 
-    Mono<ServerResponse> getAllKanjis(ServerRequest request);
+    Mono<ServerResponse> getAllKanji(ServerRequest request);
 
     Mono<ServerResponse> getKanji(ServerRequest request);
 }

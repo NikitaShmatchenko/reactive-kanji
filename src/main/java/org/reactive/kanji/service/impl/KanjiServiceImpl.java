@@ -49,7 +49,7 @@ public class KanjiServiceImpl implements KanjiService {
                 .map(kanjiMapper::mapFromEntity);
     }
 
-    public Flux<Kanji> getAllKanjis() {
+    public Flux<Kanji> getAllKanji() {
         return kanjiRepository.findAll()
                 .map(kanjiMapper::mapFromEntity);
     }

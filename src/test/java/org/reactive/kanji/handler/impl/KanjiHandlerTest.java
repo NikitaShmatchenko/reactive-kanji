@@ -25,6 +25,7 @@ import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -84,7 +85,7 @@ public class KanjiHandlerTest {
                 .story(generatedString)
                 .build();
 
-        when(kanjiService.getAllKanjis())
+        when(kanjiService.getAllKanji())
                 .thenReturn(Flux.just(kanji));
 
         webTestClient.get()
@@ -92,7 +93,7 @@ public class KanjiHandlerTest {
                 .exchange()
                 .expectStatus().isOk();
 
-        verify(kanjiService).getAllKanjis();
+        verify(kanjiService).getAllKanji();
     }
 
     @Test
@@ -121,5 +122,32 @@ public class KanjiHandlerTest {
 
         verify(kanjiService).getKanjiByCharacter(anyString());
         verify(dictionaryInfoSearchService).searchKanji(anyString());
+    }
+
+    @Test
+    public void getKanjiBadPathParam() {
+        String generatedString = UUID.randomUUID().toString();
+
+        Kanji kanji = Kanji.builder()
+                .id(1L)
+                .character(KANJI_CHARACTER)
+                .meaning(generatedString)
+                .story(generatedString)
+                .build();
+
+        DictionaryInfo dictionaryInfo = new DictionaryInfo();
+
+        when(kanjiService.getKanjiByCharacter(anyString()))
+                .thenReturn(Mono.just(kanji));
+        when(dictionaryInfoSearchService.searchKanji(anyString()))
+                .thenReturn(Mono.just(dictionaryInfo));
+
+        webTestClient.get()
+                .uri(KANJI_ROUTE + "/" + generatedString)
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isBadRequest();
+
+        verifyNoInteractions(kanjiService, dictionaryInfoSearchService);
     }
 }

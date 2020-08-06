@@ -40,9 +40,9 @@ public class KanjiHandlerImpl implements KanjiHandler {
                 .body(kanjiService.save(kanji), Kanji.class);
     }
 
-    public Mono<ServerResponse> getAllKanjis(ServerRequest request) {
+    public Mono<ServerResponse> getAllKanji(ServerRequest request) {
         return ok()
-                .body(kanjiService.getAllKanjis(), Kanji.class);
+                .body(kanjiService.getAllKanji(), Kanji.class);
     }
 
     public Mono<ServerResponse> getKanji(ServerRequest request) {
