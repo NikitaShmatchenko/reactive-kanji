@@ -13,9 +13,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import java.util.List;
 import java.util.UUID;
 
+import static java.util.Collections.emptyList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -41,33 +41,18 @@ public class DictionaryInfoServiceTest {
 
         DictionaryInfo dictionaryInfo = new DictionaryInfo(1,
                 generatedString,
-                List.of(generatedString),
+                emptyList(),
                 1,
                 1,
-                List.of(generatedString),
-                List.of(generatedString),
-                List.of(generatedString));
+                emptyList(),
+                emptyList(),
+                emptyList());
 
         when(searchOptions.search(any(DictionaryInfoRequest.class)))
                 .thenReturn(Mono.just(dictionaryInfo));
 
         StepVerifier.create(dictionaryInfoSearchService.searchKanji(KANJI_CHARACTER))
                 .expectNext(dictionaryInfo)
-                .verifyComplete();
-
-        verify(searchOptions).search(any(DictionaryInfoRequest.class));
-    }
-
-    @Test
-    public void searchKanjiFailed() {
-        DictionaryInfoRequest.builder()
-                .kanji(KANJI_CHARACTER)
-                .build();
-
-        when(searchOptions.search(any(DictionaryInfoRequest.class)))
-                .thenThrow(new RuntimeException());
-
-        StepVerifier.create(dictionaryInfoSearchService.searchKanji(KANJI_CHARACTER))
                 .verifyComplete();
 
         verify(searchOptions).search(any(DictionaryInfoRequest.class));
