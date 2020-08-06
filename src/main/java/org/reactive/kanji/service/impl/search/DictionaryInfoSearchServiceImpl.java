@@ -7,7 +7,6 @@ import org.reactive.kanji.service.api.search.client.SearchOptions;
 import org.reactive.kanji.service.model.search.DictionaryInfo;
 import org.reactive.kanji.service.model.search.request.DictionaryInfoRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
 import reactor.core.publisher.Mono;
 
 @Slf4j
@@ -23,7 +22,7 @@ public class DictionaryInfoSearchServiceImpl implements DictionaryInfoSearchServ
         return searchOptions.search(DictionaryInfoRequest.builder()
                 .kanji(kanji)
                 .build())
-                .onErrorResume(ResponseStatusException.class, e -> {
+                .onErrorResume(e -> {
                     log.error(SEARCH_FAIL_ERROR, e);
                     return Mono.just(new DictionaryInfo());
                 });
